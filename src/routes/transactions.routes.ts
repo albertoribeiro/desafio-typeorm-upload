@@ -39,6 +39,15 @@ transactionsRouter.delete('/:id', async (request, response) => {
   return response.status(204).json({})
 });
 
+transactionsRouter.get('/:id', async (request, response) => {
+  const { id } = request.params;
+  const transactionRepository = getCustomRepository(TransactionsRepository)
+  const transaction = await transactionRepository.findOne({where:{id,},}); 
+
+  return response.json(transaction )
+
+});
+
 transactionsRouter.post('/import',upload.single('file'), async (request, response) => {
   
   const importTransactionsService = new ImportTransactionsService();
